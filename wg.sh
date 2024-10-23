@@ -85,3 +85,19 @@ monitor_address() {
         sleep "$CHECK_INTERVAL"
     done
 }
+
+if [ -f "$ADDRESSES_FILE" ]; then
+    while IFS= read -r address; do
+        [[ -z "$address" || "$address" =~ ^# ]] && continue
+        
+        if validate_address "$address"; then
+            monitor_address "$address" &
+        fi
+    done < "$ADDRESSES_FILE"
+    
+    wait
+else
+    echo "Error: $ADDRESSES_FILE not found"
+    echo "Please create the file with one Ethereum address per line"
+    exit 1
+fi
