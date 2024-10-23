@@ -43,3 +43,7 @@ validate_address() {
     fi
     return 0
 }
+
+# Monitoring parameters
+ALERT_THRESHOLD_ETH=0.1           
+CHECK_INTERVAL=60
