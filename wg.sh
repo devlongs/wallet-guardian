@@ -34,3 +34,12 @@ if ! cast block-number &> /dev/null; then
 fi
 
 echo "$(date): Connected to network via $RPC_URL" >> "$LOG_FILE"
+
+validate_address() {
+    local addr=$1
+    if [[ ! $addr =~ ^0x[a-fA-F0-9]{40}$ ]]; then
+        echo "Invalid address format: $addr"
+        return 1
+    fi
+    return 0
+}
